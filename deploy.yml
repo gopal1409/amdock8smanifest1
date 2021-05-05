@@ -1,0 +1,21 @@
+#base defination for your interaction using a yaml file in kubernetes
+apiVersion: apps/v1
+kind: Deployment #/Service/Pod/Configmap/secret #it is an comman name. 
+metadata: #inside my k8s cluster we are going to create a deployment i need to give a name to the deployment
+  name: myapp3-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp3
+  template:
+    metadata:
+      name: myaap3-pod
+      labels:
+        app: myapp3
+    spec:
+      containers:
+        - name: myapp3-container
+          image: stacksimplify/kubenginx:3.0.0
+          ports:
+            - containerPort: 80
