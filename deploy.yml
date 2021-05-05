@@ -1,21 +1,24 @@
+#to run any yaml file in kubernete
+#kubectl apply -f nameofthefile
+#any yaml run from top to botom and left to right
 #base defination for your interaction using a yaml file in kubernetes
-apiVersion: apps/v1
+apiVersion: apps/v1 #it will open app/v1 api
 kind: Deployment #/Service/Pod/Configmap/secret #it is an comman name. 
 metadata: #inside my k8s cluster we are going to create a deployment i need to give a name to the deployment
-  name: myapp3-deployment
+  name: myapp3-deployment #create an deployment with this name
 spec:
-  replicas: 3
+  replicas: 3 #this deployment will have three pod using replicas
   selector:
     matchLabels:
       app: myapp3
-  template:
+  template: #this is the template to create your container
     metadata:
       name: myaap3-pod
       labels:
-        app: myapp3
+        app: myapp3 #we need to provide the exact label which we have define using matchLabels
     spec:
       containers:
         - name: myapp3-container
-          image: stacksimplify/kubenginx:3.0.0
+          image: piuma/phpsysinfo
           ports:
             - containerPort: 80
