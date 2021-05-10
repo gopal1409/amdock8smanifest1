@@ -33,5 +33,5 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-dbpassword
+                  name: mysql-db-password
                   key: db-password
