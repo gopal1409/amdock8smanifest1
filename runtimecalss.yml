@@ -41,3 +41,18 @@ spec:
                 secretKeyRef:
                   name: mysql-db-password
                   key: db-password
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: myjob
+spec:
+  schedule: "0 0 12 1/1 * ? *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mysql
+              image: busybox
+              command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']   
