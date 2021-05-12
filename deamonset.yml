@@ -26,7 +26,7 @@ spec:
       storage: 10Gi
 ---
 apiVersion: apps/v1
-kind: DeamonSet
+kind: DaemonSet
 metadata:
   name: fluentd-elasticsearch
   namespace: kube-system
