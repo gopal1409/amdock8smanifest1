@@ -59,9 +59,9 @@ spec:
       volumes:
       - name: varlog
         hostPath:
-          Path: /var/log
+          path: /var/log
       - name: varlibdockercontainers
         hostPath: 
-          Path: /var/lib/docker/container
+          path: /var/lib/docker/container
                   
 
