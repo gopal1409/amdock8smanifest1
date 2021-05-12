@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task-pv-volume-deamon
+  labels:
+    type: local
+spec:
+  storageClassName: deamon
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+  ---
+  apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim-deamon
+spec:
+  storageClassName: deamon
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: DeamonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-loggin
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      containers:
+      - name: fluentd-elasticsearch
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2   
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m 
+            memory: 200Mi 
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/container
+          readOnly: true
+      volumes:
+      - name: varlog
+        hostPath:
+          Path: /var/log
+      - name: varlibdockercontainers
+        hostPath: 
+          Path: /var/lib/docker/container
+                  
+
